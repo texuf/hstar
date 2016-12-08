@@ -8,8 +8,10 @@
 
 import Foundation
 
-extension Position: Hashable{
-    init(_ x: Int, _ y: Int){
+extension Position: Hashable
+{
+    init(_ x: Int, _ y: Int)
+    {
         self.init(x:x, y:y)
     }
     
@@ -18,8 +20,15 @@ extension Position: Hashable{
         return y * numCols + x
     }
     
+    func isOutOfBounds() -> Bool
+    {
+        return
+            x < 0 || x >= numCols
+         || y < 0 || y >= numRows
+    }
+    
     var hashValue : Int
-        {
+    {
         get {
             return toIndex()
         }

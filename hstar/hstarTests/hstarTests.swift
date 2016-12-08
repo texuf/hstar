@@ -21,13 +21,6 @@ class hstarTests: XCTestCase {
         super.tearDown()
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
     /**
     test the hedge face enum,
     each value should have an opposite and a list of sides
@@ -63,8 +56,7 @@ class hstarTests: XCTestCase {
         XCTAssertEqual(try orientation.rotate(to: .west), Orientation(top: .three, north: .two))
         
         //make sure that everything rolls back to the start
-        let dirs:[Direction] = [.north, .south, .east, .west]
-        for dir in dirs
+        for dir in Direction.all()
         {
             XCTAssertEqual(orientation,
                            try orientation
@@ -89,8 +81,74 @@ class hstarTests: XCTestCase {
     /**
      HedgePositions combine orientations and a tile positioon
      */
-    func testHedgePosition()
+    func testHedge()
     {
-        //let hp = HedgePo
+        //create a hedge bottom left
+        let hedge = Hedge(
+            position: Position(0,0),
+            orientation: Orientation(top: .one, north: .two)
+        )
+        //rotate it around
+        for dir in Direction.all(){
+             let rotated = try! hedge.rotate(to: dir)//{
+                //assert that the hedge hashes differently
+                XCTAssertNotEqual(hedge, rotated)
+                //the footprint should be completely different
+                XCTAssert(
+                    Set<Position>(hedge.footPrint()).intersection( rotated.footPrint()).count == 0
+                )
+            //}
+            //else{
+             //   XCTFail()
+            //}
+        }
+    }
+    /**
+     bad hedges return nil
+     */
+    func testBadHedge()
+    {
+        let hedge = Hedge(position: Position(0,0), orientation: Orientation(top: .one, north: .six))
+        XCTAssertThrowsError(try hedge.rotate(to: .west)){ error in
+            XCTAssertEqual(error as? HedgeError, HedgeError.invalidOrientation)
+        }
+    }
+    /**
+     test win condition
+    */
+    func testWindCondition()
+    {
+        XCTAssertEqual(
+            goalNode,
+            Hedge( position: Position(6,2), orientation: Orientation(top: .one, north: .two))
+        )
+    }
+    /**
+    test ob
+    */
+    func testOutOfBounds()
+    {
+        let hedge = Hedge(position: Position(0,0), orientation: Orientation(top: .one, north: .two))
+        XCTAssertFalse(hedge.isOutOfBounds())
+        //rotating south is ob
+        XCTAssertTrue(try! hedge.rotate(to: .south).isOutOfBounds())
+        //rotating west is ob
+        XCTAssertTrue(try! hedge.rotate(to: .west).isOutOfBounds())
+        //rotating north is okay twice
+        XCTAssertFalse(try! hedge.rotate(to: .north).isOutOfBounds())
+        XCTAssertFalse(try! hedge.rotate(to: .north).rotate(to: .north).isOutOfBounds())
+        XCTAssertTrue( try! hedge.rotate(to: .north).rotate(to: .north).rotate(to: .north).isOutOfBounds())
+        //rotating east is okay twice
+        XCTAssertFalse(try! hedge.rotate(to: .east).isOutOfBounds())
+        XCTAssertFalse(try! hedge.rotate(to: .east).rotate(to: .east).isOutOfBounds())
+        XCTAssertTrue(try! hedge.rotate(to: .east).rotate(to: .east).rotate(to: .east).isOutOfBounds())
+    }
+    
+    /**
+     test pathfinding
+     */
+    func testPathFinding()
+    {
+        
     }
 }

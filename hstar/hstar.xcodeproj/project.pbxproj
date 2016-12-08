@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C249D3981DF93A000026B12C /* HStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3971DF93A000026B12C /* HStar.swift */; };
+		C249D3991DF93A000026B12C /* HStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3971DF93A000026B12C /* HStar.swift */; };
+		C249D39A1DF93A000026B12C /* HStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3971DF93A000026B12C /* HStar.swift */; };
 		C2750B471DF7E87800FAFF02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2750B461DF7E87800FAFF02 /* AppDelegate.swift */; };
 		C2750B491DF7E87800FAFF02 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2750B481DF7E87800FAFF02 /* ViewController.swift */; };
 		C2750B4C1DF7E87800FAFF02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2750B4A1DF7E87800FAFF02 /* Main.storyboard */; };
@@ -46,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C249D3971DF93A000026B12C /* HStar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HStar.swift; path = game/ai/HStar.swift; sourceTree = "<group>"; };
 		C2750B431DF7E87800FAFF02 /* hstar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hstar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2750B461DF7E87800FAFF02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2750B481DF7E87800FAFF02 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +94,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C249D3961DF939DC0026B12C /* ai */ = {
+			isa = PBXGroup;
+			children = (
+				C249D3971DF93A000026B12C /* HStar.swift */,
+			);
+			name = ai;
+			sourceTree = "<group>";
+		};
 		C2750B3A1DF7E87800FAFF02 = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +157,7 @@
 		C2750B741DF7EAD700FAFF02 /* game */ = {
 			isa = PBXGroup;
 			children = (
+				C249D3961DF939DC0026B12C /* ai */,
 				C2750B751DF7EBD900FAFF02 /* model */,
 			);
 			name = game;
@@ -153,9 +166,9 @@
 		C2750B751DF7EBD900FAFF02 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				C2750B761DF7EC1F00FAFF02 /* model.swift */,
 				C2750B861DF92A2600FAFF02 /* Hedge+Ext.swift */,
 				C2750B871DF92A2600FAFF02 /* Orientation+Ext.swift */,
-				C2750B761DF7EC1F00FAFF02 /* model.swift */,
 				C2750B881DF92A2600FAFF02 /* Position+Ext.swift */,
 			);
 			name = model;
@@ -301,6 +314,7 @@
 				C2750B8C1DF92A2600FAFF02 /* Orientation+Ext.swift in Sources */,
 				C2750B771DF7EC1F00FAFF02 /* model.swift in Sources */,
 				C2750B471DF7E87800FAFF02 /* AppDelegate.swift in Sources */,
+				C249D3981DF93A000026B12C /* HStar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +322,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C249D3991DF93A000026B12C /* HStar.swift in Sources */,
 				C2750B5C1DF7E87800FAFF02 /* hstarTests.swift in Sources */,
 				C2750B781DF7EC1F00FAFF02 /* model.swift in Sources */,
 				C2750B901DF92A2600FAFF02 /* Position+Ext.swift in Sources */,
@@ -320,6 +335,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C249D39A1DF93A000026B12C /* HStar.swift in Sources */,
 				C2750B671DF7E87800FAFF02 /* hstarUITests.swift in Sources */,
 				C2750B791DF7EC1F00FAFF02 /* model.swift in Sources */,
 				C2750B911DF92A2600FAFF02 /* Position+Ext.swift in Sources */,

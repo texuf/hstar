@@ -8,8 +8,33 @@
 
 import Foundation
 
+extension Hedge: Hashable
+{
+    var hashValue : Int{
+        get {
+            //very quick and dirty straitforward hash
+            return "\(position.hashValue)_\(orientation.hashValue)".hashValue
+        }
+    }
+    
+    public static func ==(lhs: Hedge, rhs: Hedge) -> Bool
+    {
+        return lhs.hashValue == rhs.hashValue
+    }
+    
+}
+
 extension Hedge
 {
+    func isOutOfBounds() -> Bool {
+        for position in footPrint(){
+            if position.isOutOfBounds(){
+                return true
+            }
+        }
+        return false
+    }
+    
     func footPrint() -> [Position]
     {
         return orientation.footPrint().map{ position + $0 }
@@ -17,12 +42,17 @@ extension Hedge
     
     func rotate(to direction: Direction) throws -> Hedge
     {
-        let toOrientation = try orientation.rotate(to: direction)
-        let translation = getTranslation(to: direction, toOrientation: toOrientation)
-        return Hedge(
-            position: position + translation,
-            orientation: toOrientation
-        )
+        //do {
+            let toOrientation = try orientation.rotate(to: direction)
+            let translation = getTranslation(to: direction, toOrientation: toOrientation)
+            return Hedge(
+                position: position + translation,
+                orientation: toOrientation
+            )
+        //}
+        //catch{
+        //    return nil
+        //}
     }
     
     private func getTranslation(to direction: Direction, toOrientation: Orientation) -> Position

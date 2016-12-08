@@ -13,12 +13,16 @@ import Foundation
  */
 let numCols = 7
 let numRows = 7
+let hLength = 3
+let hDepth = 2
 
-/*var winCondition: HedgePosition = HedgePosition(
-    tile: Tile(x: 6, y: 3),
-    topFace: .one,
-    northFace: .two
-)*/
+/**
+ Magic Win Condition
+ */
+var goalNode: Hedge = Hedge(
+    position: Position(x: 6, y: 2),
+    orientation: Orientation(top: .one, north: .two)
+)
 
 /**
  Hedge Errors
@@ -57,47 +61,35 @@ enum HedgeFace : Int
     case four //flatback
     case five //smile
     case six //square
-    
+}
+
+extension HedgeFace
+{
     func sides() -> [HedgeFace]
     {
         switch self {
-            case .one:   return [.two, .three, .five, .four]
-            case .two:   return [.one, .four, .six, .three]
-            case .three: return [.one, .two, .six, .five]
-            case .four:  return [.one, .five, .six, .two]
-            case .five:  return [.one, .three, .six, .four]
-            case .six:   return [.two, .four, .five, .three]
+        case .one:   return [.two, .three, .five, .four]
+        case .two:   return [.one, .four, .six, .three]
+        case .three: return [.one, .two, .six, .five]
+        case .four:  return [.one, .five, .six, .two]
+        case .five:  return [.one, .three, .six, .four]
+        case .six:   return [.two, .four, .five, .three]
         }
     }
     
     func opposite() -> HedgeFace
     {
         switch self {
-            case .one:   return .six
-            case .two:   return .five
-            case .three: return .four
-            case .four:  return .three
-            case .five:  return .two
-            case .six:   return .one
+        case .one:   return .six
+        case .two:   return .five
+        case .three: return .four
+        case .four:  return .three
+        case .five:  return .two
+        case .six:   return .one
         }
     }
 }
 
-/*enum HedgeShape
-{
-    case square
-    case smile
-    case bench
-    case flatback
-}
-
-enum HedgeRotation
-{
-    case zero
-    case ninety
-    case oneeighty
-    case twoseventy
-}*/
 
 enum Direction
 {
@@ -105,7 +97,16 @@ enum Direction
     case south
     case east
     case west
+    
+    //dirty func because we can't iterate over directions
+    static func all() -> [Direction]{
+        return [.north, .south, .east, .west]
+    }
 }
+
+/**
+ we're using bottom left coordinate system (like chess)
+ */
 
 struct Position
 {

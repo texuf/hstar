@@ -8,8 +8,15 @@
 
 import Foundation
 
-extension Orientation: Equatable
+extension Orientation: Hashable
 {
+    var hashValue : Int{
+        get {
+            //very quick and dirty straitforward hash
+            return "\(north.rawValue)_\(top.rawValue)".hashValue
+        }
+    }
+    
     public static func ==(lhs: Orientation, rhs: Orientation) -> Bool
     {
         return lhs.top == rhs.top
@@ -48,13 +55,13 @@ extension Orientation
     func size()  -> (width: Int, height: Int)
     {
         if top == .one || top == .six{
-            return (width: 2, height: 2)
+            return (width: hDepth, height: hDepth)
         }
         else if north == .one || north == .six{
-            return (width: 2, height: 3)
+            return (width: hDepth, height: hLength)
         }
         else{
-            return (width: 3, height: 2)
+            return (width: hLength, height: hDepth)
         }
     }
     
