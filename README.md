@@ -61,3 +61,11 @@ The hedge faces are numbered like die, and have been assigned in the following w
 ## Exceptions
 
 Bad orientations will throw HedgeError.invalidOrientation 
+
+## Caveats
+
+I'm still learning Swift, especially when it comes to the best way to throw exceptions, the best usages of ? and !, and the best way to test my code. 
+
+This project is far from perfect and any and all feedback is appreciated. 
+
+
