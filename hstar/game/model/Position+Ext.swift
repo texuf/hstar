@@ -15,22 +15,18 @@ extension Position: Hashable
         self.init(x:x, y:y)
     }
     
-    func toIndex() -> Int
-    {
-        return y * numCols + x
-    }
-    
-    func isOutOfBounds() -> Bool
+    func isInBounds() -> Bool
     {
         return
-            x < 0 || x >= numCols
-         || y < 0 || y >= numRows
+            x >= 0 && x < numCols
+         && y >= 0 && y < numRows
     }
     
     var hashValue : Int
     {
         get {
-            return toIndex()
+            //quick and dirty hash functions
+            return "\(x)_\(y)".hashValue
         }
     }
     

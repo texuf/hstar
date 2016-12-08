@@ -17,11 +17,20 @@ let hLength = 3
 let hDepth = 2
 
 /**
- Magic Win Condition
+ Magic Win Conditions
+ 
+ we're using bottom left coordinate system (like chess)
+ and there are 2 win conditions, goal1 and goal2
  */
-var goalNode: Hedge = Hedge(
-    position: Position(x: 6, y: 2),
+
+var goal1: Hedge = Hedge(
+    position: Position(x: 5, y: 2),
     orientation: Orientation(top: .one, north: .two)
+)
+
+var goal2: Hedge = Hedge(
+    position: Position(x: 5, y: 2),
+    orientation: Orientation(top: .six, north: .five)
 )
 
 /**
@@ -65,9 +74,13 @@ enum HedgeFace : Int
 
 extension HedgeFace
 {
+    /**
+     sides from top in clockwise order
+     */
     func sides() -> [HedgeFace]
     {
-        switch self {
+        let top = self
+        switch top {
         case .one:   return [.two, .three, .five, .four]
         case .two:   return [.one, .four, .six, .three]
         case .three: return [.one, .two, .six, .five]
@@ -76,7 +89,10 @@ extension HedgeFace
         case .six:   return [.two, .four, .five, .three]
         }
     }
-    
+    /*
+     get opposite of any side
+     should be 7 - self.rawValue
+     */
     func opposite() -> HedgeFace
     {
         switch self {
@@ -103,10 +119,6 @@ enum Direction
         return [.north, .south, .east, .west]
     }
 }
-
-/**
- we're using bottom left coordinate system (like chess)
- */
 
 struct Position
 {

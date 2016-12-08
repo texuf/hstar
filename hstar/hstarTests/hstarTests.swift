@@ -89,18 +89,15 @@ class hstarTests: XCTestCase {
             orientation: Orientation(top: .one, north: .two)
         )
         //rotate it around
-        for dir in Direction.all(){
-             let rotated = try! hedge.rotate(to: dir)//{
-                //assert that the hedge hashes differently
-                XCTAssertNotEqual(hedge, rotated)
-                //the footprint should be completely different
-                XCTAssert(
-                    Set<Position>(hedge.footPrint()).intersection( rotated.footPrint()).count == 0
-                )
-            //}
-            //else{
-             //   XCTFail()
-            //}
+        for dir in Direction.all()
+        {
+            let rotated = try! hedge.rotate(to: dir)
+            //assert that the hedge hashes differently
+            XCTAssertNotEqual(hedge, rotated)
+            //the footprint should overlap by 2 or 3 tiles always
+            XCTAssert(
+                Set<Position>(hedge.footPrint()).intersection( rotated.footPrint()).count > 0
+            )
         }
     }
     /**
@@ -116,11 +113,11 @@ class hstarTests: XCTestCase {
     /**
      test win condition
     */
-    func testWindCondition()
+    func testWinCondition()
     {
         XCTAssertEqual(
-            goalNode,
-            Hedge( position: Position(6,2), orientation: Orientation(top: .one, north: .two))
+            goal1,
+            Hedge( position: Position(5,2), orientation: Orientation(top: .one, north: .two))
         )
     }
     /**
@@ -128,27 +125,75 @@ class hstarTests: XCTestCase {
     */
     func testOutOfBounds()
     {
+        //start bottom left
         let hedge = Hedge(position: Position(0,0), orientation: Orientation(top: .one, north: .two))
-        XCTAssertFalse(hedge.isOutOfBounds())
+        XCTAssertTrue(hedge.isInBounds())
         //rotating south is ob
-        XCTAssertTrue(try! hedge.rotate(to: .south).isOutOfBounds())
+        XCTAssertFalse(try! hedge.rotate(to: .south).isInBounds())
         //rotating west is ob
-        XCTAssertTrue(try! hedge.rotate(to: .west).isOutOfBounds())
-        //rotating north is okay twice
-        XCTAssertFalse(try! hedge.rotate(to: .north).isOutOfBounds())
-        XCTAssertFalse(try! hedge.rotate(to: .north).rotate(to: .north).isOutOfBounds())
-        XCTAssertTrue( try! hedge.rotate(to: .north).rotate(to: .north).rotate(to: .north).isOutOfBounds())
-        //rotating east is okay twice
-        XCTAssertFalse(try! hedge.rotate(to: .east).isOutOfBounds())
-        XCTAssertFalse(try! hedge.rotate(to: .east).rotate(to: .east).isOutOfBounds())
-        XCTAssertTrue(try! hedge.rotate(to: .east).rotate(to: .east).rotate(to: .east).isOutOfBounds())
+        XCTAssertFalse(try! hedge.rotate(to: .west).isInBounds())
+        //we can rotate three full times from one corner to another
+        func rotate(h: Hedge, d: Direction)
+        {
+            var x = h
+            for i in 1...4
+            {
+                x = try! x.rotate(to: d)
+                if i < 4 { XCTAssertTrue( x.isInBounds()) }
+                else     { XCTAssertFalse(x.isInBounds()) }
+            }
+        }
+        rotate(h: hedge, d: .north)
+        rotate(h: hedge, d: .east)
     }
     
     /**
      test pathfinding
      */
-    func testPathFinding()
+    func testPathFromGoalNode()
     {
-        
+        let path = try! HStar.shortestPath(from: goal1, obstacles: [])
+        XCTAssertEqual(1, path.count)
+        XCTAssertEqual(goal1, path[0])
+    }
+    
+    func testBlockedPath()
+    {
+        let start = try! goal1.rotate(to: .west)
+        let obstacles = Set<Position>([goal1.position])
+        let path = try! HStar.shortestPath(from: start, obstacles: obstacles)
+        XCTAssertEqual(0, path.count)
+    }
+    
+    func testOneRotationPath()
+    {
+        func test(goalNode: Hedge)
+        {
+            let start = try! goalNode.rotate(to: .south)
+            XCTAssertEqual(goalNode, try start.rotate(to: .north))
+            XCTAssert(start.isInBounds())
+            let obstacles = Set<Position>([Position(4,2), Position(1,2), Position(2, 4), Position(4, 5)])
+            let path = try! HStar.shortestPath(from: start, obstacles: obstacles)
+            XCTAssertEqual(2, path.count)
+        }
+        test(goalNode: goal1)
+        test(goalNode: goal2)
+    }
+    
+    func testHedgeFromVideoAt1m25s()
+    {
+        let start = Hedge(
+            position: Position(1, 4),
+            orientation: Orientation(top: .five, north: .four) //top could have also been .2
+        )
+        let obstacles = Set<Position>([
+            Position(1, 3),
+            Position(2, 4),
+            Position(3, 2),
+            Position(6, 5)
+        ])
+        let path = try! HStar.shortestPath(from: start, obstacles: obstacles)
+        XCTAssert(path.count > 0)
+        XCTAssertEqual(9, path.count)
     }
 }

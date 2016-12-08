@@ -93,13 +93,13 @@ extension Orientation
         case .four:
             return size().width > size().height
                 ? [
+                    (0, 1), /*gap*/ (2, 1),
+                    (0, 0), /*gap*/ (2, 0)
+                ]
+                : [
                     (0, 2), (1, 2),
                     /*gap*/ /*gap*/
                     (0, 0), (1, 0),
-                ]
-                : [
-                    (0, 1), /*gap*/ (2, 1),
-                    (0, 0), /*gap*/ (2, 0)
                 ]
         case .five:
             return size().width > size().height

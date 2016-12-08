@@ -26,13 +26,13 @@ extension Hedge: Hashable
 
 extension Hedge
 {
-    func isOutOfBounds() -> Bool {
+    func isInBounds() -> Bool {
         for position in footPrint(){
-            if position.isOutOfBounds(){
-                return true
+            if !position.isInBounds(){
+                return false
             }
         }
-        return false
+        return true
     }
     
     func footPrint() -> [Position]
@@ -42,17 +42,12 @@ extension Hedge
     
     func rotate(to direction: Direction) throws -> Hedge
     {
-        //do {
-            let toOrientation = try orientation.rotate(to: direction)
-            let translation = getTranslation(to: direction, toOrientation: toOrientation)
-            return Hedge(
-                position: position + translation,
-                orientation: toOrientation
-            )
-        //}
-        //catch{
-        //    return nil
-        //}
+        let toOrientation = try orientation.rotate(to: direction)
+        let translation = getTranslation(to: direction, toOrientation: toOrientation)
+        return Hedge(
+            position: position + translation,
+            orientation: toOrientation
+        )
     }
     
     private func getTranslation(to direction: Direction, toOrientation: Orientation) -> Position
@@ -61,19 +56,19 @@ extension Hedge
             case .north:
                 return Position(
                     x: 0,
-                    y: orientation.size().height)
+                    y: orientation.size().height - 1)
             case .east:
                 return Position(
-                    x: orientation.size().width,
+                    x: orientation.size().width - 1,
                     y: 0)
             case .west:
                 return Position(
-                    x: -toOrientation.size().width,
+                    x: -toOrientation.size().width + 1,
                     y: 0)
             case .south:
                 return Position(
                     x: 0,
-                    y: -toOrientation.size().height)
+                    y: -toOrientation.size().height + 1)
         }
     }
     

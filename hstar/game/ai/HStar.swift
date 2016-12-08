@@ -12,19 +12,31 @@ import Foundation
  HStar is a modified AStar algorithm that is familiar with the rules of Hedgehog Escape
  it also dirtly uses globals from the model.swift file
  based of the classic A* https://en.wikipedia.org/wiki/A*_search_algorithm
+ 
+ returns 
+    empty array if no path was found
+    array of count 1 if start is equal to the goal
+    array of hedges describing the position and orientation of each move required to reach target
+ 
+ throws 
+    invalidOrientation
+ 
+ caveats
+    - since the hedge is symetrical, each unique combination of lower left tile 
+        and shape maps to two hedge positions, which can cause some inefficiencies in this
+        algorithm, but because it's always taking the shortest path, loops shouldn't be returned in the answer
  */
 
 class HStar{
     static func shortestPath(
         from start: Hedge,
         obstacles: Set<Position>
-    ) -> [Hedge]?
+    ) throws -> [Hedge]
     {
         // The set of nodes already evaluated.
         var closedSet: Set<Hedge> = []
         // The set of currently discovered nodes still to be evaluated.
         // Initially, only the start node is known.
-        let goal = goalNode
         var openSet: Set<Hedge> = [start]
         // For each node, which node it can most efficiently be reached from.
         // If a node can be reached from many nodes, cameFrom will eventually contain the
@@ -38,12 +50,14 @@ class HStar{
         // by passing by that node. That value is partly known, partly heuristic.
         var fScore: [Hedge: Int] = [:]
         // For the first node, that value is completely heuristic.
-        fScore[start] = heuristicCostEstimate(from: start, to: goalNode)
+        fScore[start] = heuristicCostEstimate(from: start, to: goal1)
         
-        do {
+        
+        while openSet.count > 0
+        {
             //current = the node in openSet having the lowest fScore[] value
             let current = bestFScoreNode(openSet: openSet, fScores: fScore)
-            if current == goalNode
+            if current == goal1 || current == goal2 //because same shape, just different rotation
             {
                 return reconstructPath(cameFrom: cameFrom, current: current)
             }
@@ -71,22 +85,18 @@ class HStar{
                 // This path is the best until now. Record it!
                 cameFrom[neighbor] = current
                 gScore[neighbor] = tentativeGScore
-                fScore[neighbor] = gScore[neighbor]! + heuristicCostEstimate(from: neighbor, to: goal)
+                fScore[neighbor] = gScore[neighbor]! + heuristicCostEstimate(from: neighbor, to: goal1)
             }
         }
-        catch {
-            
-        }
-        return nil
+        
+        return [] //didn't find a path
     }
     
     private static func getNeighbors(current: Hedge, obstacles: Set<Position>) throws -> [Hedge]
     {
-        return try Direction.all()
-            .map{
-                try current.rotate(to: $0)
-            }.filter{
-                !$0.isOutOfBounds()
+        let all = try Direction.all().map{ try current.rotate(to: $0) }
+        return all.filter{
+                $0.isInBounds()
                 && obstacles.intersection($0.footPrint()).count == 0
             }
     }
