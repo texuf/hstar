@@ -10,6 +10,18 @@
 		C249D3981DF93A000026B12C /* HStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3971DF93A000026B12C /* HStar.swift */; };
 		C249D3991DF93A000026B12C /* HStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3971DF93A000026B12C /* HStar.swift */; };
 		C249D39A1DF93A000026B12C /* HStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3971DF93A000026B12C /* HStar.swift */; };
+		C249D39D1DF9FF2A0026B12C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D39C1DF9FF2A0026B12C /* GameScene.swift */; };
+		C249D39E1DF9FF2A0026B12C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D39C1DF9FF2A0026B12C /* GameScene.swift */; };
+		C249D39F1DF9FF2A0026B12C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D39C1DF9FF2A0026B12C /* GameScene.swift */; };
+		C249D3A11DFA00440026B12C /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3A01DFA00440026B12C /* GameView.swift */; };
+		C249D3A21DFA00440026B12C /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3A01DFA00440026B12C /* GameView.swift */; };
+		C249D3A31DFA00440026B12C /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3A01DFA00440026B12C /* GameView.swift */; };
+		C249D3A61DFA01000026B12C /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3A51DFA01000026B12C /* GameController.swift */; };
+		C249D3A71DFA01000026B12C /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3A51DFA01000026B12C /* GameController.swift */; };
+		C249D3A81DFA01000026B12C /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3A51DFA01000026B12C /* GameController.swift */; };
+		C249D3AA1DFA036B0026B12C /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3A91DFA036B0026B12C /* GridView.swift */; };
+		C249D3AB1DFA036B0026B12C /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3A91DFA036B0026B12C /* GridView.swift */; };
+		C249D3AC1DFA036B0026B12C /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3A91DFA036B0026B12C /* GridView.swift */; };
 		C2750B471DF7E87800FAFF02 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2750B461DF7E87800FAFF02 /* AppDelegate.swift */; };
 		C2750B491DF7E87800FAFF02 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2750B481DF7E87800FAFF02 /* ViewController.swift */; };
 		C2750B4C1DF7E87800FAFF02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C2750B4A1DF7E87800FAFF02 /* Main.storyboard */; };
@@ -50,6 +62,10 @@
 
 /* Begin PBXFileReference section */
 		C249D3971DF93A000026B12C /* HStar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HStar.swift; path = game/ai/HStar.swift; sourceTree = "<group>"; };
+		C249D39C1DF9FF2A0026B12C /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = game/view/GameScene.swift; sourceTree = "<group>"; };
+		C249D3A01DFA00440026B12C /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = game/view/GameView.swift; sourceTree = "<group>"; };
+		C249D3A51DFA01000026B12C /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameController.swift; path = game/controller/GameController.swift; sourceTree = "<group>"; };
+		C249D3A91DFA036B0026B12C /* GridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GridView.swift; path = game/view/GridView.swift; sourceTree = "<group>"; };
 		C2750B431DF7E87800FAFF02 /* hstar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hstar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2750B461DF7E87800FAFF02 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2750B481DF7E87800FAFF02 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +116,24 @@
 				C249D3971DF93A000026B12C /* HStar.swift */,
 			);
 			name = ai;
+			sourceTree = "<group>";
+		};
+		C249D39B1DF9FF100026B12C /* view */ = {
+			isa = PBXGroup;
+			children = (
+				C249D39C1DF9FF2A0026B12C /* GameScene.swift */,
+				C249D3A01DFA00440026B12C /* GameView.swift */,
+				C249D3A91DFA036B0026B12C /* GridView.swift */,
+			);
+			name = view;
+			sourceTree = "<group>";
+		};
+		C249D3A41DFA00E30026B12C /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				C249D3A51DFA01000026B12C /* GameController.swift */,
+			);
+			name = controller;
 			sourceTree = "<group>";
 		};
 		C2750B3A1DF7E87800FAFF02 = {
@@ -158,7 +192,9 @@
 			isa = PBXGroup;
 			children = (
 				C249D3961DF939DC0026B12C /* ai */,
+				C249D3A41DFA00E30026B12C /* controller */,
 				C2750B751DF7EBD900FAFF02 /* model */,
+				C249D39B1DF9FF100026B12C /* view */,
 			);
 			name = game;
 			sourceTree = "<group>";
@@ -309,8 +345,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				C2750B891DF92A2600FAFF02 /* Hedge+Ext.swift in Sources */,
+				C249D3A61DFA01000026B12C /* GameController.swift in Sources */,
 				C2750B8F1DF92A2600FAFF02 /* Position+Ext.swift in Sources */,
+				C249D3AA1DFA036B0026B12C /* GridView.swift in Sources */,
+				C249D39D1DF9FF2A0026B12C /* GameScene.swift in Sources */,
 				C2750B491DF7E87800FAFF02 /* ViewController.swift in Sources */,
+				C249D3A11DFA00440026B12C /* GameView.swift in Sources */,
 				C2750B8C1DF92A2600FAFF02 /* Orientation+Ext.swift in Sources */,
 				C2750B771DF7EC1F00FAFF02 /* model.swift in Sources */,
 				C2750B471DF7E87800FAFF02 /* AppDelegate.swift in Sources */,
@@ -326,7 +366,11 @@
 				C2750B5C1DF7E87800FAFF02 /* hstarTests.swift in Sources */,
 				C2750B781DF7EC1F00FAFF02 /* model.swift in Sources */,
 				C2750B901DF92A2600FAFF02 /* Position+Ext.swift in Sources */,
+				C249D3A71DFA01000026B12C /* GameController.swift in Sources */,
 				C2750B8D1DF92A2600FAFF02 /* Orientation+Ext.swift in Sources */,
+				C249D39E1DF9FF2A0026B12C /* GameScene.swift in Sources */,
+				C249D3A21DFA00440026B12C /* GameView.swift in Sources */,
+				C249D3AB1DFA036B0026B12C /* GridView.swift in Sources */,
 				C2750B8A1DF92A2600FAFF02 /* Hedge+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,7 +383,11 @@
 				C2750B671DF7E87800FAFF02 /* hstarUITests.swift in Sources */,
 				C2750B791DF7EC1F00FAFF02 /* model.swift in Sources */,
 				C2750B911DF92A2600FAFF02 /* Position+Ext.swift in Sources */,
+				C249D3A81DFA01000026B12C /* GameController.swift in Sources */,
 				C2750B8E1DF92A2600FAFF02 /* Orientation+Ext.swift in Sources */,
+				C249D39F1DF9FF2A0026B12C /* GameScene.swift in Sources */,
+				C249D3A31DFA00440026B12C /* GameView.swift in Sources */,
+				C249D3AC1DFA036B0026B12C /* GridView.swift in Sources */,
 				C2750B8B1DF92A2600FAFF02 /* Hedge+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

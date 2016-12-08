@@ -11,10 +11,13 @@ import Foundation
 /**
  Magic Numbers
  */
-let numCols = 7
-let numRows = 7
-let hLength = 3
-let hDepth = 2
+struct GameProps
+{
+    static let numCols = 7
+    static let numRows = 7
+    static let numObstacles = 4
+    static let hedgeFootprintSize = 6
+}
 
 /**
  Magic Win Conditions

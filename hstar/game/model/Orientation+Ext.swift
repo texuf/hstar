@@ -52,19 +52,25 @@ extension Orientation
         }
     }
     
+    /*
+     sizes are hard coded to 2 and 3 for clarity
+    */
     func size()  -> (width: Int, height: Int)
     {
         if top == .one || top == .six{
-            return (width: hDepth, height: hDepth)
+            return (width: 2, height: 2)
         }
         else if north == .one || north == .six{
-            return (width: hDepth, height: hLength)
+            return (width: 2, height: 3)
         }
         else{
-            return (width: hLength, height: hDepth)
+            return (width: 3, height: 2)
         }
     }
     
+    /*
+     brute force footprinting
+     */
     func footPrint() -> [(Int, Int)]
     {
         switch top {
