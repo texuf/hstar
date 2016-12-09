@@ -11,17 +11,17 @@ import SpriteKit
 
 class GameScene: SKScene {
     
+    private var gameController: GameController!
+    
     override func didMove(to: SKView) {
         //        Logger.info("did move to: \(to)")
         
         
         removeAllChildren()
         let gameView = GameView(size: self.frame.size)
-        //self.gameView = gameView
         addChild(gameView)
         
-        let gameController = GameController(view: gameView)
-        //self.gameController = gameController
+        gameController = GameController(view: gameView)
         gameController.startNewGame()
         
         

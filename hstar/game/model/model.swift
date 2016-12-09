@@ -141,3 +141,12 @@ struct Hedge
     var orientation: Orientation = Orientation(top: .one, north: .two)
 }
 
+struct Board
+{
+    var start: Hedge = Hedge()
+    var obstacles: Set<Position> = []
+    var current: Hedge = Hedge()
+    var winnableIn: Int = 0
+    var turnCount: Int = 0
+}
+

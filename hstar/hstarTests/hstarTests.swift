@@ -182,16 +182,19 @@ class hstarTests: XCTestCase {
     
     func testHedgeFromVideoAt1m25s()
     {
+        //create a starting hedge
         let start = Hedge(
-            position: Position(1, 4),
+            position: Position(x: 1, y: 4), //position
             orientation: Orientation(top: .five, north: .four) //top could have also been .2
         )
+        //list of obstacle positions
         let obstacles = Set<Position>([
-            Position(1, 3),
-            Position(2, 4),
-            Position(3, 2),
-            Position(6, 5)
+            Position(x: 1, y: 3),
+            Position(x: 2, y: 4),
+            Position(x: 3, y: 2),
+            Position(x: 6, y: 5)
         ])
+        //get the shortest path to the goal
         let path = try! HStar.shortestPath(from: start, obstacles: obstacles)
         XCTAssert(path.count > 0)
         XCTAssertEqual(9, path.count)
