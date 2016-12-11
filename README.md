@@ -49,14 +49,14 @@ The hedge faces are numbered like die, and have been assigned in the following w
         |_4_|
  
  
-             |3|3|
-             | | |
-             |3|3|
-     |2| |2| |1|1| |5| |5| |6|6|
-     |2|2|2| |1|1| |5|5|5| |6|6|
-             |4|4|
-             |4|4|
-             |4|4|
+            |3|3|
+            | | |
+            |3|3|
+    |2| |2| |1|1| |5| |5| |6|6|
+    |2|2|2| |1|1| |5|5|5| |6|6|
+            |4|4|
+            |4|4|
+            |4|4|
              
 ## Exceptions
 
@@ -64,7 +64,7 @@ Bad orientations will throw HedgeError.invalidOrientation
 
 ## Caveats
 
-I'm still learning Swift, especially when it comes to the best way to throw exceptions, the best usages of ? and !, and the best way to test my code. 
+I'm still learning Swift, especially when it comes to the best way to throw exceptions, the best usages of ? and !, unowned and weak, and the best way to test my code. 
 
 This project is far from perfect and any and all feedback is appreciated. 
 

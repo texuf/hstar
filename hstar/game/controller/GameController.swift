@@ -11,7 +11,7 @@ import Foundation
 
 class GameController
 {
-    enum GameControllerError: String
+    enum GameControllerError: Error
     {
         case randomStartTimedOut
     }
@@ -28,7 +28,7 @@ class GameController
     func startNewGame()
     {
         do{
-            let (start, obstacles, path) = GameController.generateRandomStart()
+            let (start, obstacles, path) = try GameController.generateRandomStart()
             board = Board(
                 start: start,
                 obstacles: obstacles,
@@ -38,39 +38,78 @@ class GameController
             view.initialize(
                 board: board,
                 shortestPath: path,
-                onMove: {
-                    [unowned self]
-                    (_ direction: Direction) in
-                    self.move(to: direction)
-            })
+                delegate: self)
         }
-        catch let error as GameControllerError
+        catch let error as NSError
         {
-            print(error)
+            // a reboot is currently necessary
+            view.somethingWentWrong(error: String(describing: error))
         }
     }
     
     func move(to direction: Direction)
     {
-        board.current = board.current.rotate(to: direction)
-        let path = HStar.shortestPath(from: board.current, obstacles: board.obstacles)
-        view.update(board: board, shortestPath: path)
-        if path.count
+        do{
+            board.current = try board.current.rotate(to: direction)
+            let path = try HStar.shortestPath(from: board.current, obstacles: board.obstacles)
+            view.update(board: board, shortestPath: path)
+            if path.count == 1
+            {
+                view.displayWin()
+            }
+        }
+        catch{
+            print("error rotating hedge")
+        }
+        
     }
     
     static func generateRandomStart() throws -> (start: Hedge, obstacles: Set<Position>, path: [Hedge])
     {
-        //limit number of ties so we don't run forever
+        //limit number of tries so we don't run forever
         let limit = 10000
         var count = 0
         while count < limit
         {
             count += 1
             //randomly pick top
+            let top = HedgeFace(rawValue: Int(arc4random_uniform(6)) + 1)!
             //randomly pick north from top's sides
+            let orientation = Orientation(
+                top: top,
+                north: top.sides()[Int(arc4random_uniform(UInt32(top.sides().count)))])
             //randomly pick position
-            //randomly pick obstacles if obstacle not in footprint
-            //check to see if there's a solution
+            let start = Hedge(
+                position: Position(
+                    x: Int(arc4random_uniform(UInt32(GameProps.numCols - orientation.size().width))),
+                    y: Int(arc4random_uniform(UInt32(GameProps.numRows - orientation.size().height)))
+                ),
+                orientation: orientation)
+            if start.isInBounds(){
+                //randomly pick obstacles if obstacle not in footprint
+                //check to see if there's a solution
+                let footprint = start.footPrint()
+                var obstacles = Set<Position>()
+                while obstacles.count < GameProps.numObstacles {
+                    let ob = Position(
+                        x: Int(arc4random_uniform(UInt32(GameProps.numCols))),
+                        y: Int(arc4random_uniform(UInt32(GameProps.numRows)))
+                    )
+                    if !footprint.contains(ob)
+                    {
+                        obstacles.insert(ob)
+                    }
+                }
+                let path = try HStar.shortestPath(from: start, obstacles: obstacles)
+                if path.count > 1
+                {
+                    return (
+                        start: start,
+                        obstacles: obstacles,
+                        path: path
+                    )
+                }
+            }
         }
         throw GameControllerError.randomStartTimedOut
     }
