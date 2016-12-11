@@ -43,12 +43,12 @@ class HStar{
         // most efficient previous step.
         var cameFrom: [Hedge: Hedge] = [:]
         // For each node, the cost of getting from the start node to that node.
-        var gScore: [Hedge: Int] = [:]
+        var gScore: [Hedge: Double] = [:]
         // The cost of going from start to start is zero.
         gScore[start] = 0
         // For each node, the total cost of getting from the start node to the goal
         // by passing by that node. That value is partly known, partly heuristic.
-        var fScore: [Hedge: Int] = [:]
+        var fScore: [Hedge: Double] = [:]
         // For the first node, that value is completely heuristic.
         fScore[start] = heuristicCostEstimate(from: start, to: goal1)
         
@@ -101,9 +101,9 @@ class HStar{
             }
     }
     
-    private static func bestFScoreNode(openSet: Set<Hedge>, fScores: [Hedge: Int]) -> Hedge
+    private static func bestFScoreNode(openSet: Set<Hedge>, fScores: [Hedge: Double]) -> Hedge
     {
-        var bestScore: Int = Int.max
+        var bestScore: Double = DBL_MAX
         var bestNode: Hedge!
         for node in openSet{
             if fScores[node]! < bestScore
@@ -115,17 +115,17 @@ class HStar{
         return bestNode!
     }
     
-    private static func heuristicCostEstimate(from: Hedge, to: Hedge) -> Int
+    private static func heuristicCostEstimate(from: Hedge, to: Hedge) -> Double
     {
         //return distance for now since
         return distBetween(from: from, to: to)
     }
 
-    private static func distBetween(from fHedge: Hedge, to tHedge: Hedge) -> Int {
-        //return unsquared distance
+    private static func distBetween(from fHedge: Hedge, to tHedge: Hedge) -> Double {
         let to = tHedge.position
         let from  = fHedge.position
-        return (to.x - from.x) * (to.x - from.x) + (to.y - from.y) * (to.y - from.y)
+        let d = (to.x - from.x) * (to.x - from.x) + (to.y - from.y) * (to.y - from.y)
+        return sqrt(Double(d))
     }
     private static func reconstructPath(cameFrom: [Hedge: Hedge], current: Hedge) -> [Hedge]
     {

@@ -17,6 +17,7 @@ struct GameProps
     static let numRows = 7
     static let numObstacles = 4
     static let hedgeFootprintSize = 6
+    static let font = "helvetica"
 }
 
 /**
@@ -148,5 +149,6 @@ struct Board
     var current: Hedge = Hedge()
     var winnableIn: Int = 0
     var turnCount: Int = 0
+    var showSolution: Bool = true
 }
 

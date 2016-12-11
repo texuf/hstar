@@ -34,7 +34,8 @@ class GameController
                 obstacles: obstacles,
                 current: start,
                 winnableIn: path.count,
-                turnCount: 0)
+                turnCount: 0,
+                showSolution: board.showSolution)
             view.initialize(
                 board: board,
                 shortestPath: path,
@@ -47,10 +48,34 @@ class GameController
         }
     }
     
+    func toggleSolution()
+    {
+        board.showSolution = !board.showSolution
+        renderBoard()
+    }
+    
+    func restartCurrentGame()
+    {
+        board.current = board.start
+        renderBoard()
+    }
+    
     func move(to direction: Direction)
     {
         do{
+            board.turnCount += 1
             board.current = try board.current.rotate(to: direction)
+            renderBoard()
+        }
+        catch{
+            print("error rotating hedge")
+        }
+        
+    }
+    
+    private func renderBoard()
+    {
+        do{
             let path = try HStar.shortestPath(from: board.current, obstacles: board.obstacles)
             view.update(board: board, shortestPath: path)
             if path.count == 1
@@ -59,9 +84,8 @@ class GameController
             }
         }
         catch{
-            print("error rotating hedge")
+            print("error finding path")
         }
-        
     }
     
     static func generateRandomStart() throws -> (start: Hedge, obstacles: Set<Position>, path: [Hedge])

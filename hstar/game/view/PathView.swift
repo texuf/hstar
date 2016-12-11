@@ -28,10 +28,15 @@ class PathView : SKShapeNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func draw(path: [Position])
+    func draw(board: Board, shortestPath: [Hedge])
     {
-        self.isHidden = false
+        guard board.showSolution else {
+            self.isHidden = true
+            return
+        }
         
+        self.isHidden = false
+        let path = shortestPath.map{$0.position}
         for label in labels{
             label.removeFromParent()
         }
@@ -42,11 +47,12 @@ class PathView : SKShapeNode {
         
         func makePoint(_ pos: Position, yMod: CGFloat) -> CGPoint
         {
-            return CGPoint(x: CGFloat(pos.x) * blockSize + blockSize/2, y: CGFloat(pos.y) * blockSize + blockSize/2 + yMod )
+            return CGPoint(x: CGFloat(pos.x) * blockSize + blockSize/2 + yMod, y: CGFloat(pos.y) * blockSize + blockSize/2 + yMod )
         }
         
         if path.count > 0{
             var from = makePoint(path[0], yMod: 0)
+            reached[path[0]] = 1
             start.position = from
             for i in 1..<path.count
             {
@@ -64,7 +70,7 @@ class PathView : SKShapeNode {
                 label.horizontalAlignmentMode = .center
                 label.verticalAlignmentMode = .center
                 label.fontColor = .black
-                label.fontName = "helvetica"
+                label.fontName = GameProps.font
                 addChild(label)
                 labels.append(label)
                 

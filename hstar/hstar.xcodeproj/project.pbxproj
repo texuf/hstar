@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C20F221C1DFCEC4D0018BB56 /* LabeledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F221B1DFCEC4D0018BB56 /* LabeledButton.swift */; };
+		C20F221D1DFCEC4D0018BB56 /* LabeledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F221B1DFCEC4D0018BB56 /* LabeledButton.swift */; };
+		C20F221E1DFCEC4D0018BB56 /* LabeledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F221B1DFCEC4D0018BB56 /* LabeledButton.swift */; };
+		C20F22201DFCEC670018BB56 /* ViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F221F1DFCEC670018BB56 /* ViewHelpers.swift */; };
+		C20F22211DFCEC670018BB56 /* ViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F221F1DFCEC670018BB56 /* ViewHelpers.swift */; };
+		C20F22221DFCEC670018BB56 /* ViewHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F221F1DFCEC670018BB56 /* ViewHelpers.swift */; };
+		C20F22241DFCF81F0018BB56 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F22231DFCF81F0018BB56 /* CGPoint+Extensions.swift */; };
+		C20F22251DFCF81F0018BB56 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F22231DFCF81F0018BB56 /* CGPoint+Extensions.swift */; };
+		C20F22261DFCF81F0018BB56 /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20F22231DFCF81F0018BB56 /* CGPoint+Extensions.swift */; };
 		C249D3981DF93A000026B12C /* HStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3971DF93A000026B12C /* HStar.swift */; };
 		C249D3991DF93A000026B12C /* HStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3971DF93A000026B12C /* HStar.swift */; };
 		C249D39A1DF93A000026B12C /* HStar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C249D3971DF93A000026B12C /* HStar.swift */; };
@@ -67,6 +76,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C20F221B1DFCEC4D0018BB56 /* LabeledButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LabeledButton.swift; path = game/view/components/LabeledButton.swift; sourceTree = "<group>"; };
+		C20F221F1DFCEC670018BB56 /* ViewHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewHelpers.swift; path = game/view/components/ViewHelpers.swift; sourceTree = "<group>"; };
+		C20F22231DFCF81F0018BB56 /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CGPoint+Extensions.swift"; path = "game/view/components/CGPoint+Extensions.swift"; sourceTree = "<group>"; };
 		C249D3971DF93A000026B12C /* HStar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HStar.swift; path = game/ai/HStar.swift; sourceTree = "<group>"; };
 		C249D39C1DF9FF2A0026B12C /* GameScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameScene.swift; path = game/view/GameScene.swift; sourceTree = "<group>"; };
 		C249D3A01DFA00440026B12C /* GameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameView.swift; path = game/view/GameView.swift; sourceTree = "<group>"; };
@@ -150,6 +162,9 @@
 			isa = PBXGroup;
 			children = (
 				C249D3B61DFCCA9B0026B12C /* SimpleButton.swift */,
+				C20F221B1DFCEC4D0018BB56 /* LabeledButton.swift */,
+				C20F221F1DFCEC670018BB56 /* ViewHelpers.swift */,
+				C20F22231DFCF81F0018BB56 /* CGPoint+Extensions.swift */,
 			);
 			name = components;
 			sourceTree = "<group>";
@@ -364,9 +379,12 @@
 			files = (
 				C2750B891DF92A2600FAFF02 /* Hedge+Ext.swift in Sources */,
 				C249D3A61DFA01000026B12C /* GameController.swift in Sources */,
+				C20F22241DFCF81F0018BB56 /* CGPoint+Extensions.swift in Sources */,
 				C2750B8F1DF92A2600FAFF02 /* Position+Ext.swift in Sources */,
+				C20F22201DFCEC670018BB56 /* ViewHelpers.swift in Sources */,
 				C249D3AA1DFA036B0026B12C /* GridView.swift in Sources */,
 				C249D39D1DF9FF2A0026B12C /* GameScene.swift in Sources */,
+				C20F221C1DFCEC4D0018BB56 /* LabeledButton.swift in Sources */,
 				C249D3BB1DFCD4C80026B12C /* PathView.swift in Sources */,
 				C2750B491DF7E87800FAFF02 /* ViewController.swift in Sources */,
 				C249D3A11DFA00440026B12C /* GameView.swift in Sources */,
@@ -383,11 +401,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C249D3991DF93A000026B12C /* HStar.swift in Sources */,
+				C20F22251DFCF81F0018BB56 /* CGPoint+Extensions.swift in Sources */,
 				C249D3BC1DFCD4C80026B12C /* PathView.swift in Sources */,
 				C2750B5C1DF7E87800FAFF02 /* hstarTests.swift in Sources */,
 				C2750B781DF7EC1F00FAFF02 /* model.swift in Sources */,
 				C2750B901DF92A2600FAFF02 /* Position+Ext.swift in Sources */,
 				C249D3A71DFA01000026B12C /* GameController.swift in Sources */,
+				C20F22211DFCEC670018BB56 /* ViewHelpers.swift in Sources */,
+				C20F221D1DFCEC4D0018BB56 /* LabeledButton.swift in Sources */,
 				C249D3B81DFCCA9B0026B12C /* SimpleButton.swift in Sources */,
 				C2750B8D1DF92A2600FAFF02 /* Orientation+Ext.swift in Sources */,
 				C249D39E1DF9FF2A0026B12C /* GameScene.swift in Sources */,
@@ -402,11 +423,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C249D39A1DF93A000026B12C /* HStar.swift in Sources */,
+				C20F22261DFCF81F0018BB56 /* CGPoint+Extensions.swift in Sources */,
 				C249D3BD1DFCD4C80026B12C /* PathView.swift in Sources */,
 				C2750B671DF7E87800FAFF02 /* hstarUITests.swift in Sources */,
 				C2750B791DF7EC1F00FAFF02 /* model.swift in Sources */,
 				C2750B911DF92A2600FAFF02 /* Position+Ext.swift in Sources */,
 				C249D3A81DFA01000026B12C /* GameController.swift in Sources */,
+				C20F22221DFCEC670018BB56 /* ViewHelpers.swift in Sources */,
+				C20F221E1DFCEC4D0018BB56 /* LabeledButton.swift in Sources */,
 				C249D3B91DFCCA9B0026B12C /* SimpleButton.swift in Sources */,
 				C2750B8E1DF92A2600FAFF02 /* Orientation+Ext.swift in Sources */,
 				C249D39F1DF9FF2A0026B12C /* GameScene.swift in Sources */,

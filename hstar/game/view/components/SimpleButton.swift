@@ -12,11 +12,6 @@ import SpriteKit
 class SimpleButton: SKSpriteNode {
     private var tapped: () -> ()
     
-    convenience init(rect: CGRect, color: UIColor, tapped: @escaping () -> ()) {
-        self.init(size: CGSize(width: rect.width, height: rect.height), color: color, tapped: tapped)
-        position = CGPoint(x: rect.midX, y: rect.midY)
-    }
-    
     init(size: CGSize, color: UIColor, tapped: @escaping () -> ()) {
         self.tapped = tapped
         super.init(texture: nil, color: color, size: size)

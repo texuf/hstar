@@ -16,25 +16,32 @@ class GameView: SKNode
      so not commented super well
     */
     private var blockSize: CGFloat
+    private var menuButtonSize: CGSize
+    private var menuStartPosition: CGPoint
     private var board: SKNode
     private var path: PathView
     private var buttons: SKNode
     private var hedgeBlocks: [SKNode]
     private var obstacles: [SKNode]
+    private var menu: [(condition: (Board) -> Bool, button: LabeledButton)] = []
     private weak var delegate: GameController?
     
     init(size: CGSize)
     {
+        blockSize = floor((CGFloat(size.width) * 0.9) / CGFloat(GameProps.numCols))
+        let boardSize = CGSize(width: blockSize * CGFloat(GameProps.numCols), height: blockSize * CGFloat(GameProps.numRows))
         board = SKNode()
         buttons = SKNode()
-        blockSize = floor((CGFloat(size.width) * 0.9) / CGFloat(GameProps.numCols))
+        menuButtonSize = CGSize(width: size.width/2, height: blockSize * 0.9)
+        menuStartPosition = CGPoint(x: size.width/2, y: size.height/2 - boardSize.height/2 - menuButtonSize.height)
         path = PathView(blockSize: blockSize)
+        path.alpha = 0.2
         hedgeBlocks = [SKNode]()
         obstacles = [SKNode]()
         super.init()
         
         //create a board node to hold all the board elements
-        let boardSize = CGSize(width: blockSize * CGFloat(GameProps.numCols), height: blockSize * CGFloat(GameProps.numRows))
+        
         board.position = CGPoint(x: size.width/2 - boardSize.width/2, y: size.height/2 - boardSize.height/2)
         addChild(board)
         
@@ -77,6 +84,8 @@ class GameView: SKNode
         //add the button container for easy button management
         board.addChild(buttons)
         
+        //make the main menu buttons
+        makeMainMenu()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -91,16 +100,18 @@ class GameView: SKNode
     {
         self.delegate = delegate
         drawObstacles(board: board)
-        drawButtons(current: board.current, obstacles: board.obstacles)
-        path.draw(path: shortestPath.map{$0.position})
+        drawButtons(board: board, shortestPath: shortestPath)
+        path.draw(board: board, shortestPath: shortestPath)
         moveHedge(to: board.current, duration: 0)
+        displayMenu(board: board)
     }
     
     func update(board: Board, shortestPath: [Hedge])
     {
-        drawButtons(current: board.current, obstacles: board.obstacles)
-        path.draw(path: shortestPath.map{$0.position})
+        drawButtons(board: board, shortestPath: shortestPath)
+        path.draw(board: board, shortestPath: shortestPath)
         moveHedge(to: board.current)
+        displayMenu(board: board)
     }
     
     func displayWin()
@@ -113,8 +124,10 @@ class GameView: SKNode
         print("something went wrong: \(error)")
     }
     
-    private func drawButtons(current: Hedge, obstacles: Set<Position>)
+    private func drawButtons(board: Board, shortestPath: [Hedge])
     {
+        let current = board.current
+        let nextHedge: Hedge? = shortestPath.count > 1 ? shortestPath[1] : nil
         buttons.removeAllChildren()
         let footprint = current.footPrint()
         for direction in Direction.all()
@@ -122,12 +135,17 @@ class GameView: SKNode
             let rotated = try! current.rotate(to: direction)
             if rotated.isInBounds()
             {
-                if obstacles.intersection(rotated.footPrint()).count == 0
+                if board.obstacles.intersection(rotated.footPrint()).count == 0
                 {
                     for pos in rotated.footPrint()
                     {
                         if !footprint.contains(pos)
                         {
+                            let hintedAlpha: CGFloat = (rotated == nextHedge) ? 0.7 : 0.2
+                            let buttonAlpha: CGFloat = board.showSolution
+                                ? hintedAlpha
+                                : 0.6
+                            
                             let button = SimpleButton(
                                 size: CGSize(width: blockSize - 4, height: blockSize - 4),
                                 color: .green,
@@ -137,7 +155,7 @@ class GameView: SKNode
                             })
                             button.alpha = 0
                             button.position = getPosition(for: pos)
-                            let fadeIn = SKAction.fadeAlpha(to: 0.6, duration: 0.1)
+                            let fadeIn = SKAction.fadeAlpha(to: buttonAlpha, duration: 0.1)
                             button.run(fadeIn)
                             buttons.addChild(button)
                         }
@@ -179,8 +197,49 @@ class GameView: SKNode
         }
     }
     
+    private func displayMenu(board: Board)
+    {
+        var yDiff: CGFloat = 0
+        for kv in menu{
+            if kv.condition(board)
+            {
+                kv.button.isHidden = false
+                kv.button.position = menuStartPosition + CGPoint(x: 0, y: yDiff)
+                yDiff -= menuButtonSize.height * 1.1
+            }
+            else
+            {
+                kv.button.isHidden = true
+            }
+        }
+    }
+    
+    private func makeMainMenu()
+    {
+        let buttonColor = UIColor.blue
+        let omenu: [(String, (Board) -> Bool, () -> Void)] = [
+            ("Show Hints", {$0.showSolution == false}, {[weak self] in self?.delegate?.toggleSolution() }),
+            ("Hide Hints", {$0.showSolution == true}, {[weak self] in self?.delegate?.toggleSolution() }),
+            ("Restart Game", {_ in return true}, {[weak self] in self?.delegate?.restartCurrentGame()} ),
+            ("New Game", {_ in return true}, {[weak self] in self?.delegate?.startNewGame()} ),
+        ]
+        
+        let fontSize = ViewHelpers.findFontSize(for: "Show Solution", fontName: GameProps.font, maxFontSize: 50, minFontSize: 10, bounds: menuButtonSize * 0.9)
+        
+        for item in omenu{
+            let button = LabeledButton(text: item.0, fontSize: fontSize, size: menuButtonSize, color: buttonColor, tapped: item.2)
+            menu.append(
+                condition: item.1,
+                button: button
+            )
+            addChild(button)
+            button.isHidden = true
+        }
+    }
+    
     private func getPosition(for pos: Position) -> CGPoint
     {
         return CGPoint(x: CGFloat(pos.x) * blockSize + blockSize/2, y: CGFloat(pos.y) * blockSize + blockSize/2 )
     }
 }
+
