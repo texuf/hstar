@@ -11,10 +11,14 @@ import Foundation
 /**
  Magic Numbers
  */
-let numCols = 7
-let numRows = 7
-let hLength = 3
-let hDepth = 2
+struct GameProps
+{
+    static let numCols = 7
+    static let numRows = 7
+    static let numObstacles = 4
+    static let hedgeFootprintSize = 6
+    static let font = "helvetica"
+}
 
 /**
  Magic Win Conditions
@@ -136,5 +140,15 @@ struct Hedge
 {
     var position: Position = Position()
     var orientation: Orientation = Orientation(top: .one, north: .two)
+}
+
+struct Board
+{
+    var start: Hedge = Hedge()
+    var obstacles: Set<Position> = []
+    var current: Hedge = Hedge()
+    var winnableIn: Int = 0
+    var turnCount: Int = 0
+    var showSolution: Bool = true
 }
 

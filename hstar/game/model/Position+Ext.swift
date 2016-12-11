@@ -18,8 +18,8 @@ extension Position: Hashable
     func isInBounds() -> Bool
     {
         return
-            x >= 0 && x < numCols
-         && y >= 0 && y < numRows
+            x >= 0 && x < GameProps.numCols
+         && y >= 0 && y < GameProps.numRows
     }
     
     var hashValue : Int
