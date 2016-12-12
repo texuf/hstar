@@ -70,5 +70,5 @@ This project is far from perfect and any and all feedback is appreciated.
 
 ## Bonus
 
-Run the application and try to solve it yourself!
+Run the application and try to solve it yourself! (Please don't judge me on it's beauty. This is a tech demo only. The UI is as ugly as it can possibly be, and the views are not unit tested.)
 
