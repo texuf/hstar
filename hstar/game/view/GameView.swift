@@ -24,10 +24,12 @@ class GameView: SKNode
     private var hedgeBlocks: [SKNode]
     private var obstacles: [SKNode]
     private var menu: [(condition: (Board) -> Bool, button: LabeledButton)] = []
+    private var size: CGSize
     private weak var delegate: GameController?
     
     init(size: CGSize)
     {
+        self.size = size
         blockSize = floor((CGFloat(size.width) * 0.9) / CGFloat(GameProps.numCols))
         let boardSize = CGSize(width: blockSize * CGFloat(GameProps.numCols), height: blockSize * CGFloat(GameProps.numRows))
         board = SKNode()
@@ -116,12 +118,29 @@ class GameView: SKNode
     
     func displayWin()
     {
-        print("display win!!!")
+        displayFloatyText("YOU WIN!")
     }
     
     func somethingWentWrong(error: String)
     {
-        print("something went wrong: \(error)")
+        displayFloatyText("ERROR: \(error)")
+    }
+    
+    private func displayFloatyText(_ text: String)
+    {
+        let label = SKLabelNode(fontNamed: GameProps.font)
+        label.fontSize = 80
+        label.text = text
+        label.fontColor = .darkGray
+        label.setScale(0.1)
+        label.verticalAlignmentMode = .center
+        label.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        addChild(label)
+        
+        label.run(SKAction.sequence([
+            SKAction.scale(to: 1.1, duration: 2),
+            SKAction.removeFromParent()
+        ]))
     }
     
     private func drawButtons(board: Board, shortestPath: [Hedge])
